@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 05</title>
+</head>
+
+<body>
+    <script>
+        /*
+        Завдання:
+        Напишіть сценарії гри "Вгадай число". Суть гри: вгадати за меншу кількість спроб число, яке загадав сценарій.
+        Щоразу, коли гравець намагається вгадати число, сценарій виводить підказку – менше чи більше число було загадано сценарієм.
+        Сценарій загадує число лише один раз на початку гри, і це число не змінюється до завершення гри.
+        Після завершення гри виведіть користувачеві інформацію про те, з якої спроби вгадано значення та скільки було витрачено часу на це.
+
+        Для створення випадкового числа використовуйте такий код:
+        let randomValue = Math.floor(Math.random() * 101); // випадкове значення від 0 до 100 буде записано в змінну randomValue.
+        
+        Приклад гри:
+        Сценарій: я загадав випадкове значення від 0 до 100
+        Користувач: 50
+        Сценарій: я загадав значення більше за 50
+        Користувач: 75
+        Сценарій: я загадав значення менше за 75
+        Користувач: 62
+        Сценарій: я загадав значення менше за 62
+        Користувач: 56
+        Сценарій: Правильно! Загадане значення 56. Ви вгадали з 4-ї спроби за 10 сек.
+        */
+        let randomValue = Math.floor(Math.random() * 101); // случайное значение от 0 до 100
+        let attempts = 0;
+        let startTime = new Date().getTime();
+
+        function playGame() {
+            let guessed = false;
+
+            while (!guessed) {
+                let userValue = parseInt(prompt("Введіть число від 0 до 100:"));
+                if (isNaN(userValue)) {
+                    alert("Будь ласка, введіть число.");
+                    continue;
+                }
+                attempts++;
+                if (userValue < randomValue) {
+                    alert("Сценарій: я загадав значення більше за " + userValue);
+                } else if (userValue > randomValue) {
+                    alert("Сценарій: я загадав значення менше за " + userValue);
+                } else {
+                    let endTime = new Date().getTime();
+                    let elapsedTime = (endTime - startTime) / 1000;
+                    alert(`Сценарій: Правильно! Загадане значення ${randomValue}. Ви вгадали з ${attempts}-ї спроби за ${elapsedTime} сек.`);
+                    guessed = true;
+                }
+            }
+        }
+
+        playGame();
+    </script>
+</body>
+
+</html>

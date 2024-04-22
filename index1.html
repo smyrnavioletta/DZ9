@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 01</title>
+    <style>
+        #container {
+            position: relative;
+            border: 1px solid gray;
+            width: 265px;
+            height: 50px;
+            margin-top: 20px;
+        }
+
+        #element {
+            width: 50px;
+            height: 50px;
+            background-color: green;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <button id="startBtn">Старт</button>
+    <button id="stopBtn">Стоп</button>
+    <button id="increaseBtn">Прискорити</button>
+    <button id="decreaseBtn">Уповільнити</button>
+
+    <div id="container">
+        <div id="element"></div>
+    </div>
+
+    <script>
+        let element = document.querySelector("#element");
+        let containerWidth = parseInt(getComputedStyle(document.querySelector("#container")).width);
+        let intervalID = null;
+        let speed = 40; // початкова швидкість анімації
+
+        function move() {
+            let currentLeft = parseInt(getComputedStyle(element).left);
+            if (currentLeft >= containerWidth - element.offsetWidth) {
+                direction = -1; // рух вліво
+            } else if (currentLeft <= 0) {
+                direction = 1; // рух вправо
+            }
+            element.style.left = (currentLeft + direction * 3) + 'px';
+        }
+
+        document.querySelector("#startBtn").addEventListener("click", function () {
+            if (intervalID === null) {
+                intervalID = setInterval(move, speed);
+            }
+        });
+
+        document.querySelector("#stopBtn").addEventListener("click", function () {
+            if (intervalID !== null) {
+                clearInterval(intervalID);
+                intervalID = null;
+            }
+        });
+
+        document.querySelector("#increaseBtn").addEventListener("click", function () {
+            speed = Math.max(10, speed - 5);
+            if (intervalID !== null) {
+                clearInterval(intervalID);
+                intervalID = setInterval(move, speed);
+            }
+        });
+
+        document.querySelector("#decreaseBtn").addEventListener("click", function () {
+            speed += 5;
+            if (intervalID !== null) {
+                clearInterval(intervalID);
+                intervalID = setInterval(move, speed);
+            }
+        });
+    </script>
+</body>
+</html>
